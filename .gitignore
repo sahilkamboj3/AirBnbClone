@@ -1,0 +1,5 @@
+backend/node_modules
+backend/yarn.lock
+backend/package-lock.json
+backend/dist/index.js.map
+backend/dist/db.js.map
