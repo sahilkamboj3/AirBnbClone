@@ -1,13 +1,4 @@
-// interface UserType {
-//     firstName: string;
-//     lastName: string;
-//     email: string;
-//     username: string;
-//     password: string;
-// }
-
 export default function buildMakeUser ({ Id, hashPassword }) {
-// export default function buildMakeUser ({ Id, makeEncryptedPassword }) {
     return function makeUser ({ id = Id.makeId, firstName, lastName, email, username, password, createdOn = Date.now(), modifiedOn = Date.now() } = {}) {
         if (!Id.isValidId(id)) {
             throw new Error("User must have a vaild id.");
