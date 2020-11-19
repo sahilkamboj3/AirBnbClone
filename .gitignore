@@ -1,5 +1,17 @@
+# folders
 backend/node_modules
 backend/yarn.lock
+
+# files
 backend/package-lock.json
+
+# .map files
 backend/dist/index.js.map
-backend/dist/db.js.map
+
+# user entity
+backend/dist/user/user.js.map
+backend/dist/user/index.js.map
+backend/dist/user/makeEncryptedPassword.js.map
+
+# Id entity
+backend/dist/Id/index.js.map

@@ -1,5 +1,4 @@
 import express from 'express';
-// import pool from './db/index';
 
 const app = express();
 const port: number = 5000;
@@ -14,4 +13,4 @@ app.get('/', (req , res) => {
 // app listening
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
-)
+})
