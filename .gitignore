@@ -6,14 +6,14 @@ backend/yarn.lock
 backend/package-lock.json
 
 # .map files
-backend/dist/index.js.map
+# backend/dist/index.js.map
 
-# user entity
-backend/dist/user/user.js.map
-backend/dist/user/index.js.map
-backend/dist/user/makeEncryptedPassword.js.map
+# # user entity
+# backend/dist/user/user.js.map
+# backend/dist/user/index.js.map
+# backend/dist/user/makeEncryptedPassword.js.map
 
-# Id entity
-backend/dist/Id/index.js.map
+# # Id entity
+# backend/dist/Id/index.js.map
 
 # test
