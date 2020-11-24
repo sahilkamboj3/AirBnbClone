@@ -1,7 +1,0 @@
-# folders
-backend/node_modules
-backend/yarn.lock
-backend/dist
-
-# files
-backend/package-lock.json
