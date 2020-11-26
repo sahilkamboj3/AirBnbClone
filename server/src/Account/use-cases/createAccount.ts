@@ -5,23 +5,36 @@ import { insertQuery } from '../db/dbQueries';
 import { pgQuery } from '../db/poolQueryBase';
 import UseCaseType from './useCaseType';
 import { Pool } from 'pg'
+import { UserResponse } from '../resolvers/types';
+import { ErrorType } from '../../util/types'
 
-export default function makeCreateAccount ( pool: Pool, accountInfo: AccountType ) {
-    return function createAccount() {
+export default function makeCreateAccount ( pool: Pool ) {
+    return function createAccount( accountInfo: AccountType ): UserResponse {
         const account = makeAccount(accountInfo);
         
         if (account['errors']) {
-            return "error found";
+            const error: ErrorType = {
+                field: "creating an account",
+                message: "error making the account, please try again"
+            }
+
+            return {
+                error,
+            }
+            // return "error found";
         }
+
         const inputs: UseCaseType = {
             pool,
             query: insertQuery()['query'],
-            // info: account['account'],
         }
 
        pgQuery(inputs, account['account']);
 
        // handle for errors
-       return "something";
+    //    return accountInfo;
+        return {
+            account: accountInfo,
+        }
     }
 }

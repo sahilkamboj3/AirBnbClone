@@ -6,7 +6,13 @@ import { AccountType } from '../entity/accountTypes';
 export class UserResponse {
     @Field(() => [ErrorType])
     errors?: ErrorType[];
+
+    @Field(() => ErrorType)
+    error?: ErrorType;
     
     @Field(() => AccountType)
     account?: AccountType;
+
+    // @Field(() => String)
+    // success?: string;
 }
