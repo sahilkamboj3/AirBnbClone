@@ -8,9 +8,9 @@ export interface buildMakeAccountType {
 }
 
 export function buildMakeAccount ({ isValidNumber, isValidEmail }: buildMakeAccountType) {
-    return function makeAccount ({ id, firstName, lastName, userName, email, number, password, createdAt = Date.now(), updatedAt = Date.now() }: AccountType): AccountResType {
+    return function makeAccount ({ firstName, lastName, userName, email, number, password, createdAt = Date.now(), updatedAt = Date.now() }: AccountType): AccountResType {
         const errors: ErrorType[] = [];
-
+        
         if (!firstName) {
             const err: ErrorType = {
                 field: "firstName",
