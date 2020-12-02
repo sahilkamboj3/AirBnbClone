@@ -13,19 +13,19 @@ export class UserResolver {
         
     }
 
-    @Query(() => UserResponse) 
-    async deleteUser(@Arg("id", () => Int) id: number): Promise<UserResponse> {
-        const userFeedback: ErrorType = cases.deleteAccount(id);
-        return {
-            error: userFeedback
-        }
-    } 
+    // @Query(() => UserResponse) 
+    // async deleteUser(@Arg("id", () => Int) id: number): Promise<UserResponse> {
+    //     const userFeedback: ErrorType = cases.deleteAccount(id);
+    //     return {
+    //         error: userFeedback
+    //     }
+    // } 
 
-    @Mutation(() => UserResponse)
-    async updateUser(@Arg("info", () => AccountType) options: AccountType): Promise<UserResponse> {
-        const userFeedback: ErrorType = cases.updateAccount(options);
-        return {
-            error: userFeedback
-        }
-    }
+    // @Mutation(() => UserResponse)
+    // async updateUser(@Arg("info", () => AccountType) options: AccountType): Promise<UserResponse> {
+    //     const userFeedback: ErrorType = cases.updateAccount(options);
+    //     return {
+    //         error: userFeedback
+    //     }
+    // }
 }

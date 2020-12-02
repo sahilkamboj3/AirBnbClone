@@ -37,3 +37,15 @@ export const isValidEmail = (email: string): ValidatorType => {
         valid: isDomain,
     }
 }
+
+export function buildMakeHashPassword ({ bcrypt }) {
+    return function hashPassword (pw: string): any {
+        const saltRounds = 10;
+
+        bcrypt.genSalt(saltRounds, function(_err: any, salt: any) {
+            bcrypt.hash(pw, salt, function(_err: any, hash: any) {
+                return hash;
+            })
+        })
+    }
+}

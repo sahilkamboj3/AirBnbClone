@@ -7,7 +7,7 @@ export interface buildMakeAccountType {
     isValidEmail: (email: string) => ValidatorType;
 }
 
-export function buildMakeAccount ({ isValidNumber, isValidEmail }: buildMakeAccountType) {
+export function buildMakeAccount ({ isValidNumber, isValidEmail, }: buildMakeAccountType, buildMakeHashPassword) {
     return function makeAccount ({ firstName, lastName, userName, email, number, password, createdAt = Date.now(), updatedAt = Date.now() }: AccountType): AccountResType {
         const errors: ErrorType[] = [];
         
@@ -55,7 +55,17 @@ export function buildMakeAccount ({ isValidNumber, isValidEmail }: buildMakeAcco
             }
 
             errors.push(err);
- 
+
+        }
+
+        if (password.length < 3) {
+            const err: ErrorType = {
+                field: "password",
+                message: "Password too short"
+            }
+
+            errors.push(err);
+
         }
 
         if (errors.length > 0) {
@@ -64,8 +74,10 @@ export function buildMakeAccount ({ isValidNumber, isValidEmail }: buildMakeAcco
             }
         }
 
+        const pw = buildMakeHashPassword.hashPassword(password);
+
         const account = {
-            firstName, lastName, userName, email, number, password, createdAt, updatedAt
+            firstName, lastName, userName, email, number, password: pw, createdAt, updatedAt
         } as AccountType;
 
         return {
