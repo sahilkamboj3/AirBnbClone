@@ -1,0 +1,11 @@
+create user database:
+"CREATE DATABASE user (
+    id SERIAL,
+    firstName varchar(50),
+    lastName varchar(50),
+    userName varchar(50) UNIQUE,
+    email varchar(70),
+    passowrd varchar(50),
+    createdAt timestamp without time zone,
+    updatedAt timestamp without time zone,
+)"

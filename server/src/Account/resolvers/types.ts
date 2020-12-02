@@ -13,6 +13,6 @@ export class UserResponse {
     @Field(() => AccountType)
     account?: AccountType;
 
-    // @Field(() => String)
-    // success?: string;
+    @Field(() => String)
+    response?: string;
 }

@@ -1,29 +1,22 @@
-// import { AccountType } from '../entity/accountTypes'
 import { delQuery } from '../db/dbQueries';
 import { pgQuery } from '../db/poolQueryBase';
 import UseCaseType from './useCaseType';
 import { Pool } from 'pg';
-import { ErrorType } from '../../util/types'
+import { UserResponse } from '../resolvers/types';
 
 export default function makeDeleteAccount ( pool: Pool) {
-    // return function deleteAccount( accountInfo: AccountType ): ErrorType  {
-    return function deleteAccount( id: number ): ErrorType  {
-        // const id: number = accountInfo['id'];
+    return function deleteAccount( id: number ): UserResponse {
+        // handle for if account doesn't exist beforehand - TODO
 
         const inputs: UseCaseType = {
             pool,
             query: delQuery()['query'],
-            // info: account['account'],
         }
 
        pgQuery(inputs, id);
 
        return {
-           field: "testing",
-           message: "need to handle for an error when delete doesn't work" 
-       }
-
-       // handle for errors
-    //    return "something";
+           response: "account deleted"
+      }
     }
 }

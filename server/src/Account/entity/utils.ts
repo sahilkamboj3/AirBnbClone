@@ -1,7 +1,7 @@
 import { ValidatorType } from '../../util/types';
 
 export const isValidNumber = (num: string): ValidatorType => {
-   if (num.length < 10) {
+   if (num.trim().length < 10) {
     return {
         valid: false,
     }

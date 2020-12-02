@@ -1,6 +1,4 @@
 import { DbQueryType } from '../../db/dbTypes'
-// import { ErrorType } from '../../util/types';
-// import { AccountType } from '../entity/accountTypes'
 
 export const getAllQuery  = (): DbQueryType => {
     return {
