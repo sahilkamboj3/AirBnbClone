@@ -21,19 +21,22 @@ export default function makeCreateAccount ( pool: Pool ) {
             query: insertQuery()['query'],
         }
 
-       const res = await pgQuery(inputs, account['account'], "create");
+        console.log("create account")
 
-       if (res['error']) {
+       const res = await pgQuery(inputs, account['account']);
+
+       if (res["error"]) {
             return {
                 error: {
-                    field: "create",
-                    message: res['error']
+                    field: "create account",
+                    message: res["error"]
                 }
             }
        }
 
         return {
             account: accountInfo,
+            response: "account created"
         }
     }
 }

@@ -1,39 +1,53 @@
 import UseCaseType from '../use-cases/useCaseType';
 
-export const pgQuery = async ({ pool, query }: UseCaseType, info: any = null, field: string) => {
+export const pgQuery = async ({ pool, query }: UseCaseType, info: any = null) => {
     const inputs = [];
     let error: any | null = null;
     let response: any | null = null;
 
-    for (const [,value] of Object.entries(info)) {
-        inputs.push(value);
-    }
+    
 
     if (info == null) {
-        pool.query(query)
-            .then(res => { response = res })
+        console.log('in 1');
+        await pool.query(query)
+        .then(res => { response = res })
     } else {
-        pool.query(query, inputs)
-            .then(res => { response = res })
-            .catch(err => {
-                error = errorToString(err.code);
-            })
+
+        for (const [,value] of Object.entries(info)) {
+            inputs.push(value);
+        }
+
+        console.log('in 2');
+        console.log(inputs);
+        console.log(query);
+
+
+        try {
+            response = await pool.query(query, inputs);
+        } catch(err: any) {
+            error = errorToString(parseInt(err.code));
+        }
+        // await pool.query(query, inputs)
+        // .then(res => { response = res })
+        // .catch(err => {
+        //     error = errorToString(parseInt(err.code));
+        // })
     }
 
-    await pool.end()
+    // await pool.end()
 
     return Object.freeze({
-        response: response,
-        error: error
+        response,
+        error
     })
 }
 
-const errorToString = (code: string): string => {
+const errorToString = (code: number): string => {
     let error: string = "";
 
-    if (code == "23505") {
+    if (code == 23505) {
         error = "username already exists"; 
-    } else if (code == "42601") {
+    } else if (code == 42601) {
         error = "syntax error";
     }
 

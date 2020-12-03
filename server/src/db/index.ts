@@ -7,5 +7,6 @@ export const pool: Pool = new Pool({
   host: process.env.DB_HOST,
   database: process.env.DB,
   password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.DB_PORT as string),
+  port: 5432
+  // port: parseInt(process.env.DB_PORT as string),
 } as DbType)

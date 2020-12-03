@@ -3,22 +3,22 @@ import { ErrorType } from '../../util/types';
 
 @ObjectType()
 export class AccountType {
-    @Field(() => Int)
-    id: number
+    // @Field(() => Int)
+    // id: number
 
-    @Field()
+    @Field(() => String, {nullable: true})
     firstName: string;
 
-    @Field()
+    @Field(() => String, {nullable: true})
     lastName: string;
 
-    @Field()
+    @Field(() => String, {nullable: true})
     userName: string;
 
-    @Field()
+    @Field(() => String, {nullable: true})
     email: string;
 
-    @Field()
+    @Field(() => String, {nullable: true})
     number: string;
 
     password: string;
@@ -29,10 +29,10 @@ export class AccountType {
     // @Field(() => String) 
     // updatedAt: Date;
 
-    @Field(() => Int)
+    @Field(() => Int, {nullable:true})
     createdAt: number;
     
-    @Field(() => Int) 
+    @Field(() => Int, {nullable:true}) 
     updatedAt: number;
 }
 

@@ -1,11 +1,11 @@
 // import { delQuery } from '../db/dbQueries';
 // import { pgQuery } from '../db/poolQueryBase';
 // import UseCaseType from './useCaseType';
-import { Pool } from 'pg';
-import { UserResponse } from '../resolvers/types';
+// import { Pool } from 'pg';
+// import { UserResponse } from '../resolvers/types';
 
-export default function makeDeleteAccount ( pool: Pool) {
-    return function deleteAccount( id: number ): UserResponse {
+// export default function makeDeleteAccount ( pool: Pool) {
+//     return function deleteAccount( id: number ): UserResponse {
         // handle for if account doesn't exist beforehand - TODO
 
     //     const inputs: UseCaseType = {
@@ -15,8 +15,8 @@ export default function makeDeleteAccount ( pool: Pool) {
 
     //    pgQuery(inputs, id);
 
-       return {
-           response: "account deleted"
-      }
-    }
-}
+//        return {
+//            response: "account deleted"
+//       }
+//     }
+// }

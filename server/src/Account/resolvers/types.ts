@@ -4,15 +4,18 @@ import { AccountType } from '../entity/accountTypes';
 
 @ObjectType()
 export class UserResponse {
-    @Field(() => [ErrorType])
+    @Field(() => [ErrorType], { nullable: true })
     errors?: ErrorType[];
 
-    @Field(() => ErrorType)
+    @Field(() => ErrorType, { nullable: true })
     error?: ErrorType;
     
-    @Field(() => AccountType)
+    @Field(() => AccountType, { nullable: true })
     account?: AccountType;
+    
+    @Field(() => [AccountType], { nullable: true })
+    accounts?: AccountType[];
 
-    @Field(() => String)
+    @Field(() => String, { nullable: true })
     response?: string;
 }

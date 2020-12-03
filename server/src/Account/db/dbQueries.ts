@@ -8,7 +8,7 @@ export const getAllQuery  = (): DbQueryType => {
 
 export const insertQuery = (): DbQueryType  => {
     return {
-        query: `INSERT INTO account (firstname, lastname, username, email, number, password, createdAt, updatedAt) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`,
+        query: `INSERT INTO account (firstname, lastname, username, email, number, password, createdat, updatedat) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`,
     } 
 }
 
