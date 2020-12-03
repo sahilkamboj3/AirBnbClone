@@ -32,7 +32,7 @@ export default function makeGetAccounts ( pool: Pool ) {
 
         return {
             accounts: accounts_,
-            response: "all accounts selected"
+            response: "all accounts returned"
         }
     }
 }

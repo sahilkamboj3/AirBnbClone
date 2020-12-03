@@ -36,6 +36,14 @@ export class UserResolver {
     }
 
     @Query(() => UserResponse)
+    async one(
+        @Arg("username", () => String) username: string,
+    ): Promise<UserResponse | null> {
+        const userFeedback: Promise<UserResponse> = cases.getAccount(username);
+        return userFeedback;
+    }
+
+    @Query(() => UserResponse)
     // @Mutation(() => UserResponse)
     async addUser(
         @Arg("info", () => GQLAccountInput) info: GQLAccountInput
@@ -46,17 +54,16 @@ export class UserResolver {
         const userFeedback: Promise<UserResponse> = cases.makeAccount(info_);
         return userFeedback;
     }
-    
+
+    @Query(() => UserResponse) 
+    async deleteUser(
+        @Arg("username", () => String) username: string
+    ): Promise<UserResponse> {
+        const userFeedback: UserResponse = cases.deleteAccount(username);
+        return userFeedback;
+    } 
 
     // _______________________________________________________________
-    // @Query(() => UserResponse) 
-    // async deleteUser(@Arg("id", () => Int) id: number): Promise<UserResponse> {
-    //     const userFeedback: ErrorType = cases.deleteAccount(id);
-    //     return {
-    //         error: userFeedback
-    //     }
-    // } 
-
     // @Mutation(() => UserResponse)
     // async updateUser(@Arg("info", () => AccountType) options: AccountType): Promise<UserResponse> {
     //     const userFeedback: ErrorType = cases.updateAccount(options);

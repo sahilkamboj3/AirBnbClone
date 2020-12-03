@@ -6,17 +6,17 @@
 
 // export default function makeUpdateAccount ( pool: Pool) {
 //     return function updateAccount( info: any ): UserResponse {
-        // handle for account doesn't exist - TODO
+//         // handle for account doesn't exist - TODO
 
-        // const inputs: UseCaseType = {
-        //     pool,
-        //     query: updateQuery()['query'],
-        // }
+//         const inputs: UseCaseType = {
+//             pool,
+//             query: updateQuery()['query'],
+//         }
 
-    //    pgQuery(inputs, info);
+//         pgQuery(inputs, info);
 
-//        return {
+//         return {
 //            response: "account updated"
-//        }; 
+//         }; 
 //     }
 // }
