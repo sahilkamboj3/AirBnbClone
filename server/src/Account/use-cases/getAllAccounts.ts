@@ -20,6 +20,7 @@ export default function makeGetAccounts ( pool: Pool ) {
 
             let acc = res['response'].rows[i];
             accounts_.push({
+                id: acc['id'],
                 firstName: acc['firstname'],
                 lastName: acc['lastname'],
                 userName: acc['username'],

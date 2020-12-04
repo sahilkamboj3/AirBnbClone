@@ -6,16 +6,14 @@ import { Pool } from 'pg';
 import { UserResponse } from '../resolvers/types';
 
 export default function makeDeleteAccount ( pool: Pool) {
-    return function deleteAccount( username: string ): UserResponse {
-        // handle for if account doesn't exist beforehand - TODO
-
+    return function deleteAccount( id: number ): UserResponse {
         const inputs: UseCaseType = {
             pool,
             query: delQuery()['query'],
         }
 
         const info: AccountType = {
-           userName: username 
+            id,
         } as AccountType;
 
         pgQuery(inputs, info);

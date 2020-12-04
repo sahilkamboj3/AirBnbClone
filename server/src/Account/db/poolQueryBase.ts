@@ -6,23 +6,20 @@ export const pgQuery = async ({ pool, query }: UseCaseType, info: any = null) =>
     let response: any | null = null;
 
     if (info == null) {
-        // console.log('in 1');
+
         await pool.query(query)
         .then(res => { response = res })
     } else {
-        console.log(info);
+
         for (const [,value] of Object.entries(info)) {
             inputs.push(value);
         }
-
-        // console.log('in 2');
-        // console.log(inputs);
-        // console.log(query);
 
         try {
             response = await pool.query(query, inputs);
         } catch(err: any) {
             error = errorToString(parseInt(err.code));
+            console.log(err);
         }
     }
 
@@ -40,6 +37,10 @@ const errorToString = (code: number): string => {
         error = "username already exists"; 
     } else if (code == 42601) {
         error = "syntax error";
+    } else if (code == 22003) {
+        error = "int out of range"
+    } else if (code == 22008) {
+        error = "need a different datestyle setting"
     }
 
     return error;

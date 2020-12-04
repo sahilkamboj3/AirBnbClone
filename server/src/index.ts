@@ -20,22 +20,22 @@ const main = async () => {
 
     app.use(
         session({
-          name: 'qid',
-          store: new RedisStore({
-              client: client,
-              disableTouch: true
-           }),
-           cookie: {
-              maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-              httpOnly: true,
-              sameSite: 'lax',
-              secure: __prod__,
-           },
-          secret: 'secret',
-          resave: false,
-          saveUninitialized: false,
+            name: 'qid',
+            store: new RedisStore({
+                client: client,
+                disableTouch: true
+            }),
+            cookie: {
+                maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+                httpOnly: true,
+                sameSite: 'lax',
+                secure: __prod__,
+            },
+            secret: 'secret',
+            resave: false,
+            saveUninitialized: false,
         })
-      )
+    )
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
