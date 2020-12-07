@@ -1,6 +1,6 @@
 import { Int, Arg, Field, Ctx, InputType, Query, Resolver, Mutation } from 'type-graphql';
 import { AccountType } from '../entity/accountTypes';
-import { UserResponse } from './types';
+import { UserResponse, LoginCredentials } from './types';
 import { ErrorType } from '../../util/types';
 import * as cases from '../use-cases';
 
@@ -41,6 +41,24 @@ export class UserResolver {
         return userFeedback;
     }
 
+    // @Query(() => UserResponse)
+    // async test(
+    //     @Ctx() { req }
+    // ): Promise<UserResponse> {
+    //     if (!req.session.userName) {
+    //         return {
+    //             error: {
+    //                 field: "redis",
+    //                 message: "no id"
+    //             }
+    //         }
+    //     }
+
+    //     return {
+    //         response: req.session.userName.toString(),
+    //     }
+    // }
+
     @Query(() => UserResponse)
     async me(
         @Ctx() { req }
@@ -57,6 +75,37 @@ export class UserResolver {
 
         // const userFeedback: Promise<UserResponse> = cases.getAccount(req.session.id);
         const userFeedback: Promise<UserResponse> = cases.getAccount(req.session.userName);
+        return userFeedback;
+    }
+
+    @Query(() => UserResponse)
+    async login(
+        @Arg("info", () => LoginCredentials) info: LoginCredentials, 
+        @Ctx() { req }
+    ): Promise<UserResponse | null> {
+        // if (!req.session.userName) {
+        // // if (!req.session.id) {
+        //     const error: ErrorType = {
+        //         field: "redis id",
+        //         message: "redis session id doesn't exist"
+        //     } 
+
+        //     return { error };
+        // }
+
+        // const userFeedback: Promise<UserResponse> = cases.getAccount(req.session.id);
+        const userFeedback: UserResponse = await cases.loginAccount(info);
+
+        if (userFeedback['account'] === undefined) {
+            const error: ErrorType = {
+                field: "login",
+                message: "account doesn't exist"
+            }
+            return { error }
+        }
+
+        req.session!.userName = userFeedback['account']['id'];
+        // req.session!.id = userFeedback['account']['id'];
         return userFeedback;
     }
 

@@ -12,6 +12,12 @@ export const getOneQuery  = (): DbQueryType => {
     }
 }
 
+export const loginQuery  = (): DbQueryType => {
+    return {
+        query: "SELECT * FROM account WHERE username = ($1) AND password = ($2);"
+    }
+}
+
 export const insertQuery = (): DbQueryType  => {
     return {
         query: `INSERT INTO account (firstname, lastname, username, email, number, password, createdat, updatedat) VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW()) RETURNING *;`,

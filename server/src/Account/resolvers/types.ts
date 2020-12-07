@@ -1,4 +1,4 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, ObjectType, InputType } from 'type-graphql';
 import { ErrorType } from '../../util/types'
 import { AccountType } from '../entity/accountTypes';
 
@@ -18,4 +18,13 @@ export class UserResponse {
 
     @Field(() => String, { nullable: true })
     response?: string;
+}
+
+@InputType()
+export class LoginCredentials {
+    @Field(() => String)
+    username: string
+
+    @Field(() => String)
+    password: string
 }
