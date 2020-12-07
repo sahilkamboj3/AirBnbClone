@@ -40,31 +40,13 @@ export class UserResolver {
         const userFeedback: Promise<UserResponse> = cases.getAccount(id);
         return userFeedback;
     }
-
-    // @Query(() => UserResponse)
-    // async test(
-    //     @Ctx() { req }
-    // ): Promise<UserResponse> {
-    //     if (!req.session.userName) {
-    //         return {
-    //             error: {
-    //                 field: "redis",
-    //                 message: "no id"
-    //             }
-    //         }
-    //     }
-
-    //     return {
-    //         response: req.session.userName.toString(),
-    //     }
-    // }
+    
 
     @Query(() => UserResponse)
     async me(
         @Ctx() { req }
     ): Promise<UserResponse | null> {
-        if (!req.session.userName) {
-        // if (!req.session.id) {
+        if (!req.session.accountId) {
             const error: ErrorType = {
                 field: "redis id",
                 message: "redis session id doesn't exist"
@@ -73,8 +55,7 @@ export class UserResolver {
             return { error };
         }
 
-        // const userFeedback: Promise<UserResponse> = cases.getAccount(req.session.id);
-        const userFeedback: Promise<UserResponse> = cases.getAccount(req.session.userName);
+        const userFeedback: Promise<UserResponse> = cases.getAccount(req.session.accountId);
         return userFeedback;
     }
 
@@ -83,17 +64,6 @@ export class UserResolver {
         @Arg("info", () => LoginCredentials) info: LoginCredentials, 
         @Ctx() { req }
     ): Promise<UserResponse | null> {
-        // if (!req.session.userName) {
-        // // if (!req.session.id) {
-        //     const error: ErrorType = {
-        //         field: "redis id",
-        //         message: "redis session id doesn't exist"
-        //     } 
-
-        //     return { error };
-        // }
-
-        // const userFeedback: Promise<UserResponse> = cases.getAccount(req.session.id);
         const userFeedback: UserResponse = await cases.loginAccount(info);
 
         if (userFeedback['account'] === undefined) {
@@ -104,8 +74,7 @@ export class UserResolver {
             return { error }
         }
 
-        req.session!.userName = userFeedback['account']['id'];
-        // req.session!.id = userFeedback['account']['id'];
+        req.session!.accountId = userFeedback['account']['id'];
         return userFeedback;
     }
 
@@ -123,8 +92,7 @@ export class UserResolver {
             return { error: userFeedback['error'] };
         }
 
-        req.session!.userName = userFeedback['account']['id'];
-        // req.session!.id = userFeedback['account']['id'];
+        req.session!.accountId = userFeedback['account']['id'];
 
         return userFeedback;
     }

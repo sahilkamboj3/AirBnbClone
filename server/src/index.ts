@@ -52,7 +52,10 @@ const main = async () => {
     })
 
     app.get('/accountId', function(req: express.Request, res: express.Response) {
-        res.json({accountId:req.session.userName});
+        // res.json({accountId:req.session.userName});
+        // res.json({accountId:req.session.id});
+        // res.json({accountId:req.session.account});
+        res.json({accountId:req.session.accountId});
     })
 
     app.listen(4000, () => console.log('listening on port 4000'));
