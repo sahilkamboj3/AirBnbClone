@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socket Thing2</title>
+    <title>Socket Thing1</title>
     <style>
 
         body {
@@ -19,7 +19,6 @@
 
         .messages {
             width: 100%;
-            height: 100%;
         }
 
         .other-message {
@@ -29,18 +28,19 @@
         .send-msg {
             border: 2px solid black;
         }
+        
      </style>
 </head>
 <body>
-    <p class="underline">Client2</p>
+    <p class="underline">Client 2</p>
     <div class="messages">
     </div>
-    <div onclick="sendMsg()" class='send-msg' >Send msg</div>
-
+    <div class='send-msg' onclick="sendMsg()" >Send msg</div>
+    <a href="./client1.html">client 1</a>
 </body>
 <script>
     // Create WebSocket connection.
-    const socket = new WebSocket('ws://localhost:5000');
+    const socket = new WebSocket('ws://localhost:5000/client2');
 
     // Connection opened
     socket.addEventListener('open', function (event) {
