@@ -36,10 +36,11 @@
     <div class="messages">
     </div>
     <div class='send-msg' onclick="sendMsg()" >Send msg</div>
+    <a href="./client2.html">client 2</a>
 </body>
 <script>
     // Create WebSocket connection.
-    const socket = new WebSocket('ws://localhost:5000');
+    const socket = new WebSocket('ws://localhost:5000/client1');
 
     // Connection opened
     socket.addEventListener('open', function (event) {
