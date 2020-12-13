@@ -1,2 +1,4 @@
 create user database:
 CREATE TABLE account (id SERIAL, firstName varchar(50), lastName varchar(50), userName varchar(50) UNIQUE, email varchar(70), number varchar(11), password varchar(50), createdAt timestamp without time zone, updatedAt timestamp without time zone);
+
+CREATE TABLE card_db (id serial primary key, inside int, mid int, three int, passing int, steal int, block int, imgUrl varchar(100), createdattime zone, updatedat timestamp without time zone);
