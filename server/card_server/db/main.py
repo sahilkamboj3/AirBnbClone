@@ -20,7 +20,19 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 try:
-    res = cur.execute("INSERT INTO account (firstname, lastname, username, email, number, password, createdat, updatedat) VALUES ('Bob', 'Hope', 'hope', 'hp', 'hp', 'hp', NOW(), NOW()) RETURNING *;")
+    # info = ('Bob', 'Hope', 'hope', 'hp', 'hp', 'hp')
+    dic = {
+        1: 'Bob',
+        2: 'Hope',
+        3: 'hope',
+        4: 'hp',
+        5: 'hp',
+        6: 'hp',
+    }
+    info = [(val) for val in dic.values()]
+    print(info)
+    # print(type(info))
+    res = cur.execute("INSERT INTO account (firstname, lastname, username, email, number, password, createdat, updatedat) VALUES (%s, %s, %s, %s, %s, %s, NOW(), NOW()) RETURNING *;", info)
     all = cur.fetchall()
     print(all)
     conn.commit()

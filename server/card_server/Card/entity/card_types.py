@@ -1,6 +1,6 @@
 class CardRes:
     def __init__(self):
-        self.error = None
+        self.errors = None
         self.info = None
 
 
@@ -15,7 +15,3 @@ class CardType:
         self.img_url = img_url
 
 
-class ErrorType:
-    def __init__(self, field=None, message=None):
-        self.field = field
-        self.message = message
