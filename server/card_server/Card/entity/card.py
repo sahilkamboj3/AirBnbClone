@@ -6,11 +6,11 @@ grandparent = Path(__file__).parents[2]
 sys.path.append(str(grandparent))
 sys.path.append(str(parent))
 
-from .card_types import CardRes, CardType
+from .card_types import IsValidRes, CardType, CardRes
 from .card_util import Util
 
 from gen_util.error_type import ErrorType
-# handle image url
+# handle image url and account foreign key 
 
 
 class Card(Util):
@@ -26,11 +26,11 @@ class Card(Util):
         ]
 
     def return_res(self):
-        res = self.is_valid()
-        if res.errors:
-            return res.errors, None, None
+        is_valid_res = self.is_valid()
+        if is_valid_res.errors:
+            return CardRes(is_valid_res.errors, None, None)
 
-        return None, self.info, self.create_card()
+        return CardRes(None, info=self.info, card=self.create_card())
 
     def create_card(self):
         card = CardType(
@@ -45,7 +45,7 @@ class Card(Util):
         return card
 
     def is_valid(self):
-        res = CardRes()
+        res = IsValidRes()
         errors = []
 
         for numeric in self.numerics:

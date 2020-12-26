@@ -21,5 +21,3 @@ if errors:
 else:
     print(card1.mid)
     print(card1.img_url)
-
-
