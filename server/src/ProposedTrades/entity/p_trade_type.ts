@@ -14,6 +14,12 @@ export class ProposedTradeType {
     
     @Field(() => [Int], { nullable: true })
     to_cards: number[];
+
+    @Field(() => String, {nullable:true})
+    createdAt: string;
+    
+    @Field(() => String, {nullable:true}) 
+    updatedAt: string;
     
 }
 
@@ -25,15 +31,3 @@ export class PTResType {
     @Field(() => ProposedTradeType, { nullable: true })
     trade?: ProposedTradeType
 }
-
-// export interface ProposedTradeType {
-//     from_id: number,
-//     to_id: number,
-//     from_cards: number[],
-//     to_cards: number[],
-// }
-
-// export interface PTResType {
-//     errors: ErrorType[],
-//     trade: ProposedTradeType
-// }

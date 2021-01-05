@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import express from 'express';
 import { UserResolver } from './Account/resolvers';
+import { ProposedTradeResolver } from './ProposedTrades/resolvers';
 import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
@@ -39,7 +40,7 @@ const main = async () => {
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [ UserResolver ],
+            resolvers: [ UserResolver, ProposedTradeResolver ],
             validate: false,
         }),
         context: ({ req, res }) => ({ req, res })

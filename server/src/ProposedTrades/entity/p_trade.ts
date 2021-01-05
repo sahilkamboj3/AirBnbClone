@@ -1,8 +1,8 @@
 import { ProposedTradeType, PTResType } from './p_trade_type';
 import { ErrorType } from '../../util/types'
 
-export default function buildMakeProposedTrade = () => {
-    return function makeProposedTrade({ from_id, to_id, from_cards, to_cards }: ProposedTradeType): PTResType {
+export default function buildMakeProposedTrade () {
+    return function makeProposedTrade({ from_id, to_id, from_cards, to_cards, createdAt = Date.now().toString(), updatedAt = Date.now().toString() }: ProposedTradeType): PTResType {
         const errors: ErrorType[] = []
 
         if (from_cards.length == 0) {
@@ -32,6 +32,8 @@ export default function buildMakeProposedTrade = () => {
             to_id,
             from_cards,
             to_cards,
+            createdAt: Date.now().toString(),
+            updatedAt: Date.now().toString()
         }
 
         return {
