@@ -14,3 +14,4 @@ export class ValidatorType {
     @Field(() => Boolean)
     valid: boolean
 }
+

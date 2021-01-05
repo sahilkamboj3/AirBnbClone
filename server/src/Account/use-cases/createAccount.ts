@@ -54,8 +54,6 @@ export default function makeCreateAccount ( pool: Pool ) {
             updatedAt: acc['updatedat']
         } as AccountType;
 
-        // console.log(account_);
-
         return {
             account: account_,
             response: "account created"
