@@ -23,8 +23,14 @@ class RunQuery:
         pass
 
     def run_query(self, query, tuple_=None):
-        conn = psycopg2.connect(
-            "dbname=sports_trader_db user=sahilkamboj host=localhost password=lovebread3")
+        from decouple import config
+        DBNAME = config('DB')
+        USER = config('DB_USER')
+        HOST = config('DB_HOST')
+        PASSWORD = config('DB_PASSWORD')
+        input_str = "dbname={} user={} host={} password={}".format(DBNAME, USER, HOST, PASSWORD)
+
+        conn = psycopg2.connect(input_str)
         res = DBResType()
         cur = conn.cursor()
 

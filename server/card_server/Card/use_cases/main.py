@@ -58,17 +58,17 @@ class UseCases:
         return res
 
 
-us = UseCases()
-print('create card')
-res = us.create_card_case(
-   1, 9, 9, 1, 1, 1, -1
-)
-try:
-    if res.errors:
-        for err in res.errors:
-            print(err.field, err.message)
-except AttributeError:
-    print(res.response)
+# us = UseCases()
+# print('create card')
+# res = us.create_card_case(
+#    1, 9, 9, 1, 1, 1, 1
+# )
+# try:
+#     if res.errors:
+#         for err in res.errors:
+#             print(err.field, err.message)
+# except AttributeError:
+#     print(res.response)
 
 # for err in res:
 #     print(err.field + ': ' + err.message)
