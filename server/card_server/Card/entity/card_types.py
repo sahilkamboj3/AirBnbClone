@@ -11,6 +11,8 @@ class CardRes:
 
 class CardType:
     def __init__(self, inside, mid, three, passing, steal, block, img_url=None):
+    # def __init__(self, account_id, inside, mid, three, passing, steal, block, img_url=None):
+        # self.account_id = account_id
         self.inside = inside
         self.mid = mid
         self.three = three

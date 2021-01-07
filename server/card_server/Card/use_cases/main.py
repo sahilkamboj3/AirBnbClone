@@ -16,9 +16,9 @@ class UseCases:
         self.queries = Queries()
         self.rq = RunQuery()
 
-    def create_card_case(self, account_id, inside, mid, three, passing, steal, block, url="url"):
+    def create_card_case(self, inside, mid, three, passing, steal, block, url="url"):
         card_info = {
-            "account_id": account_id,
+            "account_id": 1,
             "inside": inside,
             "mid": mid,
             "three": three,

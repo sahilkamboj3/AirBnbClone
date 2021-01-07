@@ -2,10 +2,12 @@ import sys
 from pathlib import Path
 
 parent = Path(__file__).parents[1]
-grandparent = Path(__file__).parents[2]
+# grandparent = Path(__file__).parents[2]
 
-sys.path.append(parent)
-sys.path.append(grandparent)
+sys.path.append(str(parent))
+# sys.path.append(str(grandparent))
+
+# print(sys.path)
 
 import psycopg2
 from psycopg2 import errorcodes, ProgrammingError
@@ -16,7 +18,7 @@ class DBResType:
     def __init__(self):
         self.status = None
         self.response = None
-        self.error = None
+        self.errors = None
 
 class RunQuery:
     def __init__(self):
@@ -61,7 +63,7 @@ class RunQuery:
             print(err_val)
 
         except TypeError as err:
-            res.error = self.print_error(query, err)
+            res.errors = [self.print_error(query, err)]
             res.status = 400
 
         return res
