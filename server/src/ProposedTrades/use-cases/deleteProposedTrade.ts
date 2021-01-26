@@ -3,12 +3,12 @@ import UseCaseType from './UseCaseType';
 import { pgQuery } from '../../Account/db/poolQueryBase';
 import { ProposedTradeResponse } from '../resolvers/resolverTypes';
 import { ProposedTradeType } from '../entity/p_trade_type';
-import { getOneQuery } from '../db/queries';
+import { getDeleteQuery  } from '../db/queries';
 
-export default function buildGetOneProposedTrade (pool: Pool) {
-    return async function getOneProposedTrade (id: number): Promise<ProposedTradeResponse> {
+export default function buildDeleteProposedTrade (pool: Pool) {
+    return async function deleteProposedTrade (id: number): Promise<ProposedTradeResponse> {
         const inputs: UseCaseType = {
-            query: getOneQuery()['query'],
+            query: getDeleteQuery()['query'],
             pool: pool
         }
 
@@ -17,6 +17,7 @@ export default function buildGetOneProposedTrade (pool: Pool) {
         } as ProposedTradeType;
 
         const res = await pgQuery(inputs, info);
+
         const proposedTrades: ProposedTradeType[] = [];
 
         for (let i = 0; i < res['response'].rows.length; i++) {
@@ -32,17 +33,11 @@ export default function buildGetOneProposedTrade (pool: Pool) {
             } as ProposedTradeType);
         }
 
-        if (proposedTrades.length > 0) {
-            return {
-                proposedTrades: proposedTrades,
-                response: "proposed trade returned"
-            }
-        }
-
         return {
             proposedTrades: proposedTrades,
-            response: "no such trade"
+            response: "proposed trade deleted"
         }
+        
 
     }
 }

@@ -6,11 +6,9 @@ export const pgQuery = async ({ pool, query }: UseCaseType, info: any = null) =>
     let response: any | null = null;
 
     if (info == null) {
-
         await pool.query(query)
         .then(res => { response = res })
     } else {
-
         for (const [,value] of Object.entries(info)) {
             inputs.push(value);
         }

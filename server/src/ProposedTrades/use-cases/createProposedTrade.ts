@@ -20,6 +20,7 @@ export default function buildCreateProposedTrade ( pool: Pool ) {
             query: insertQuery()['query'],
             pool: pool
         }
+
         let info = {
             from_id: proposedTradeInfo.from_id,
             to_id: proposedTradeInfo.to_id,
@@ -37,6 +38,7 @@ export default function buildCreateProposedTrade ( pool: Pool ) {
                 }
             }
         }
+
         const tradeRes = res['response'].rows[0];
         const trade_: ProposedTradeType = {
             id: tradeRes['id'],

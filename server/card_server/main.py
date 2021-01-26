@@ -1,9 +1,12 @@
+"""
+run uvicorn main:app in terminal to run main.py
+"""
 # from flask import Flask
 # from flask_graphql import GraphQLView
 from Card.use_cases.main import UseCases as cases
 from Card.entity.card_types import CardType
 from gen_util.error_type import ErrorType
-from ariadne import QueryType, MutationType, gql, make_executable_schema
+from ariadne import QueryType, MutationType, gql, make_executable_schema, upload_scalar
 from ariadne.asgi import GraphQL
 
 cases = cases()
@@ -11,6 +14,8 @@ cases = cases()
 # Define types using Schema Definition Language (https://graphql.org/learn/schema/)
 # Wrapping string in gql function provides validation and better error traceback
 type_defs = gql("""
+    scalar Upload
+
     type Error {
         field: String
         message: String
@@ -24,6 +29,7 @@ type_defs = gql("""
         steal: Int
         block: Int
         accountID: Int
+        filename: String
     }
 
     type CardOutput {
@@ -34,6 +40,7 @@ type_defs = gql("""
         steal: Int
         block: Int
         accountID: Int
+        imgURL: String
     }
 
     type GQLOutput {
@@ -61,17 +68,33 @@ mutation = MutationType()
 @query.field("getAll")
 def resolve_get_all(*_):
     res = cases.get_all_cards_case()
+
+    class CardObj():
+        def __init__(self, account_id, inside, mid, three, passing, steal, block, img_url=None):
+            self.accountID = account_id
+            self.inside = inside
+            self.mid = mid
+            self.three = three
+            self.passing = passing
+            self.steal = steal
+            self.block = block
+            self.imgURL = img_url
+
     cards = []
 
     for card in res.response:
-        cards.append(CardType(
+        print(card)
+        cards.append(CardObj(
             inside=card[1],
             mid=card[2],
             three=card[3],
             passing=card[4],
             steal=card[5],
-            block=card[6]
+            block=card[6],
+            img_url=card[7],
+            account_id=card[8]
         ))
+
     return {"cards": cards, "errors": None}
 
 
@@ -92,6 +115,7 @@ def resolve_get_one(*_, id):
         steal=res.response[0][5],
         block=res.response[0][6]
     )
+
     return {"cards": [card], "errors": None}
 
 
@@ -119,13 +143,14 @@ def resolve_get_one(*_, id):
 @mutation.field("createCard")
 def resolve_create_card(*_, card):
     res = cases.create_card_case(
-        # account_id=card['accountID'],
+        account_id=card['accountID'],
         inside=card['inside'],
         mid=card['mid'],
         three=card['three'],
         passing=card['passing'],
         steal=card['steal'],
-        block=card['block']
+        block=card['block'],
+        filename=card['filename']
     )
 
     if res.errors:
@@ -138,7 +163,7 @@ def resolve_create_card(*_, card):
     return {"cards": [card], "errors": None}
 
 
-schema = make_executable_schema(type_defs, [query, mutation])
+schema = make_executable_schema(type_defs, [query, mutation, upload_scalar])
 app = GraphQL(schema, debug=True)
 
 

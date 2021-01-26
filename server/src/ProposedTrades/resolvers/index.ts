@@ -26,11 +26,27 @@ export class ProposedTradeResolver {
         return res;
     }
 
+    @Query(() => ProposedTradeResponse)
+    async getOneProposedTrade(
+        @Arg("id", () => Int) id: number,
+    ): Promise<ProposedTradeResponse> {
+        const res: ProposedTradeResponse = await cases.getOneProposedTrade(id);
+        return res;
+    }
+
     @Mutation(() => ProposedTradeResponse)
     async insertPT(
         @Arg("info", () => ProposedTradeInput) info: ProposedTradeInput,
     ): Promise<ProposedTradeResponse> {
         const res: ProposedTradeResponse = await cases.createProposedTrade(info as ProposedTradeType);
+        return res;
+    }
+    
+    @Query(() => ProposedTradeResponse)
+    async deleteProposedTrade(
+        @Arg("id", () => Int) id: number,
+    ): Promise<ProposedTradeResponse> {
+        const res: ProposedTradeResponse = await cases.deleteProposedTrade(id);
         return res;
     }
 }

@@ -9,23 +9,31 @@ sys.path.append(str(grandparent))
 from entity.card import Card
 from db_dir.queries import Queries
 from db.db_ import RunQuery
+from .s3 import ImageClass
 
 
 class UseCases:
     def __init__(self):
         self.queries = Queries()
         self.rq = RunQuery()
+        self.img_class = ImageClass(bucket_name='sports-trader-card-images')
 
-    def create_card_case(self, inside, mid, three, passing, steal, block, url="url"):
+    # def create_card_case(self, inside, mid, three, passing, steal, block, url="url"):
+    def create_card_case(self, account_id, inside, mid, three, passing, steal, block, filename):
+        REGION = 'us-east-2'
+        url = f'https://sports-trader-card-images.s3.{REGION}.amazonaws.com/{filename}'
+
+        self.img_class.upload_img(filename)
+
         card_info = {
-            "account_id": 1,
+            "account_id": account_id,
             "inside": inside,
             "mid": mid,
             "three": three,
             "passing": passing,
             "steal": steal,
             "block": block,
-            "imgurl": url
+            "img_url": url
         }
 
         card_inst = Card(card_info)

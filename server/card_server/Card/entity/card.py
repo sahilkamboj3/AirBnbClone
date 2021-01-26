@@ -15,7 +15,7 @@ from gen_util.error_type import ErrorType
 
 class Card(Util):
     def __init__(self, info):
-        self.info = info  # info is a dictionary
+        self.info = info  # dictionary
         self.numerics = [
             "inside",
             "mid",
@@ -34,12 +34,14 @@ class Card(Util):
 
     def create_card(self):
         card = CardType(
+            account_id=self.info['account_id'],
             inside=self.info['inside'],
             mid=self.info['mid'],
             three=self.info['three'],
             passing=self.info['passing'],
             steal=self.info['steal'],
-            block=self.info['block']
+            block=self.info['block'],
+            img_url=self.info['img_url']
         )
 
         return card

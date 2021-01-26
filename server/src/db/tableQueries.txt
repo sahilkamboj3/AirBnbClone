@@ -1,4 +1,3 @@
-create user database:
-CREATE TABLE account (id SERIAL, firstName varchar(50), lastName varchar(50), userName varchar(50) UNIQUE, email varchar(70), number varchar(11), password varchar(50), createdAt timestamp without time zone, updatedAt timestamp without time zone);
-
-CREATE TABLE card_db (id serial primary key, inside int, mid int, three int, passing int, steal int, block int, imgUrl varchar(100), createdat timestamp without time zone, updatedat timestamp without time zone);
+CREATE TABLE account (id SERIAL, firstname varchar(50), lastname varchar(50), username varchar(50) UNIQUE, email varchar(70), number varchar(11), password varchar(50), createdAt timestamp without time zone, updatedAt timestamp without time zone);
+CREATE TABLE card_db (id SERIAL PRIMARY KEY, inside int, mid int, three int, passing int, steal int, block int, imgUrl varchar(100), createdat timestamp without time zone, updatedat timestamp without time zone);
+CREATE TABLE proposed_trade_db (id SERIAL PRIMARY KEY, from_id int, to_id int,)
