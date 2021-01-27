@@ -33,6 +33,7 @@ type_defs = gql("""
     }
 
     type CardOutput {
+        id: Int
         inside: Int
         mid: Int
         three: Int
@@ -70,7 +71,8 @@ def resolve_get_all(*_):
     res = cases.get_all_cards_case()
 
     class CardObj():
-        def __init__(self, account_id, inside, mid, three, passing, steal, block, img_url=None):
+        def __init__(self, id, account_id, inside, mid, three, passing, steal, block, img_url=None):
+            self.id = id
             self.accountID = account_id
             self.inside = inside
             self.mid = mid
@@ -83,8 +85,8 @@ def resolve_get_all(*_):
     cards = []
 
     for card in res.response:
-        print(card)
         cards.append(CardObj(
+            id=card[0],
             inside=card[1],
             mid=card[2],
             three=card[3],
@@ -101,47 +103,91 @@ def resolve_get_all(*_):
 @query.field("getOne")
 def resolve_get_one(*_, id):
     res = cases.get_one_card_case(id)
+
+    class CardObj():
+        def __init__(self, id, account_id, inside, mid, three, passing, steal, block, img_url=None):
+            self.id = id
+            self.accountID = account_id
+            self.inside = inside
+            self.mid = mid
+            self.three = three
+            self.passing = passing
+            self.steal = steal
+            self.block = block
+            self.imgURL = img_url
+
     if len(res.response) == 0:
         field = "getOne query"
         message = "ID is not valid"
         error = ErrorType(field=field, message=message)
         return {"cards": None, "errors": [error]}
 
-    card = CardType(
+    card = CardObj(
+        id=res.response[0][0],
         inside=res.response[0][1],
         mid=res.response[0][2],
         three=res.response[0][3],
         passing=res.response[0][4],
         steal=res.response[0][5],
-        block=res.response[0][6]
+        block=res.response[0][6],
+        account_id=res.response[0][8],
+        img_url=res.response[0][7]
     )
 
     return {"cards": [card], "errors": None}
 
 
 @mutation.field("deleteCard")
-def resolve_get_one(*_, id):
+def resolve_delete_card(*_, id):
+    class CardObj():
+        def __init__(self, id, account_id, inside, mid, three, passing, steal, block, img_url=None):
+            self.id = id
+            self.accountID = account_id
+            self.inside = inside
+            self.mid = mid
+            self.three = three
+            self.passing = passing
+            self.steal = steal
+            self.block = block
+            self.imgURL = img_url
+
     res = cases.delete_card_case(id)
-    print(res.response)
+
     if len(res.response) == 0:
         field = "deleteCard query"
         message = "ID is not valid"
         error = ErrorType(field=field, message=message)
         return {"cards": None, "errors": [error]}
 
-    card = CardType(
+    card = CardObj(
+        id=res.response[0][0],
         inside=res.response[0][1],
         mid=res.response[0][2],
         three=res.response[0][3],
         passing=res.response[0][4],
         steal=res.response[0][5],
-        block=res.response[0][6]
+        block=res.response[0][6],
+        account_id=res.response[0][8],
+        img_url=res.response[0][7]
     )
+
     return {"cards": [card], "errors": None}
 
 
 @mutation.field("createCard")
 def resolve_create_card(*_, card):
+    class CardObj():
+        def __init__(self, account_id, inside, mid, three, passing, steal, block, id=None, img_url=None):
+            self.id = id
+            self.accountID = account_id
+            self.inside = inside
+            self.mid = mid
+            self.three = three
+            self.passing = passing
+            self.steal = steal
+            self.block = block
+            self.imgURL = img_url
+
     res = cases.create_card_case(
         account_id=card['accountID'],
         inside=card['inside'],
@@ -159,8 +205,19 @@ def resolve_create_card(*_, card):
             error = ErrorType(field=error.field, message=error.message)
             errors.append(error)
         return {"cards": None, "errors": errors}
+    
+    returned_card = CardObj(
+        account_id=card['accountID'],
+        inside=card['inside'],
+        mid=card['mid'],
+        three=card['three'],
+        passing=card['passing'],
+        steal=card['steal'],
+        block=card['block'],
+        img_url='https://sports-trader-card-images.s3.us-east-2.amazonaws.com/{filename}'.format(filename=card['filename'])
+    )
 
-    return {"cards": [card], "errors": None}
+    return {"cards": [returned_card], "errors": None}
 
 
 schema = make_executable_schema(type_defs, [query, mutation, upload_scalar])
