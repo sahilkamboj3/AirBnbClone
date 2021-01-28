@@ -1,6 +1,5 @@
 import sys
 import psycopg2
-# OperationalError, errors
 from psycopg2 import errorcodes, ProgrammingError
 
 
@@ -20,7 +19,6 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 try:
-    # info = ('Bob', 'Hope', 'hope', 'hp', 'hp', 'hp')
     dic = {
         1: 'Bob',
         2: 'Hope',
@@ -30,11 +28,8 @@ try:
         6: 'hp',
     }
     info = [(val) for val in dic.values()]
-    print(info)
-    # print(type(info))
     res = cur.execute("INSERT INTO account (firstname, lastname, username, email, number, password, createdat, updatedat) VALUES (%s, %s, %s, %s, %s, %s, NOW(), NOW()) RETURNING *;", info)
     all = cur.fetchall()
-    print(all)
     conn.commit()
     cur.close()
     conn.close()

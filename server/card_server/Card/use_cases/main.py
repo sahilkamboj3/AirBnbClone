@@ -9,21 +9,21 @@ sys.path.append(str(grandparent))
 from entity.card import Card
 from db_dir.queries import Queries
 from db.db_ import RunQuery
-from .s3 import ImageClass
+from .s3 import S3Class
+import os
 
 
 class UseCases:
     def __init__(self):
         self.queries = Queries()
         self.rq = RunQuery()
-        self.img_class = ImageClass(bucket_name='sports-trader-card-images')
+        self.s3_class = S3Class(bucket_name='sports-trader-card-images')
 
-    # def create_card_case(self, inside, mid, three, passing, steal, block, url="url"):
     def create_card_case(self, account_id, inside, mid, three, passing, steal, block, filename):
         REGION = 'us-east-2'
         url = f'https://sports-trader-card-images.s3.{REGION}.amazonaws.com/{filename}'
 
-        self.img_class.upload_img(filename)
+        self.s3_class.upload_img(filename)
 
         card_info = {
             "account_id": account_id,
@@ -46,6 +46,8 @@ class UseCases:
         values = [(val) for val in card_info.values()]
         res = self.rq.run_query(query=query, tuple_=values)
 
+        os.remove(os.path.dirname(__file__) + '/../../media/' + filename)
+
         return res
 
     def get_all_cards_case(self):
@@ -63,32 +65,11 @@ class UseCases:
         query = self.queries.delete_card()
         res = self.rq.run_query(query=query, tuple_=[(id)])
 
+        url = res.response[0][7]
+        filename_idx = url.rfind('/')
+        filename = url[filename_idx + 1:]
+
+        self.s3_class.delete_img(filename)
+
         return res
 
-
-# us = UseCases()
-# print('create card')
-# res = us.create_card_case(
-#    1, 9, 9, 1, 1, 1, 1
-# )
-# try:
-#     if res.errors:
-#         for err in res.errors:
-#             print(err.field, err.message)
-# except AttributeError:
-#     print(res.response)
-
-# for err in res:
-#     print(err.field + ': ' + err.message)
-# print(res)
-
-# print('get cards')
-# res = us.get_all_cards_case()
-# print(res.response)
-
-# print('get one card')
-# res = us.get_one_card_case(1)
-# print(res.response)
-
-# print('delete card')
-# res = us.delete_card_case(2)

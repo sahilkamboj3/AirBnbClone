@@ -1,21 +1,15 @@
 """
 run uvicorn main:app in terminal to run main.py
 """
-# from flask import Flask
-# from flask_graphql import GraphQLView
 from Card.use_cases.main import UseCases as cases
 from Card.entity.card_types import CardType
 from gen_util.error_type import ErrorType
-from ariadne import QueryType, MutationType, gql, make_executable_schema, upload_scalar
+from ariadne import QueryType, MutationType, gql, make_executable_schema
 from ariadne.asgi import GraphQL
 
 cases = cases()
 
-# Define types using Schema Definition Language (https://graphql.org/learn/schema/)
-# Wrapping string in gql function provides validation and better error traceback
 type_defs = gql("""
-    scalar Upload
-
     type Error {
         field: String
         message: String
@@ -168,7 +162,7 @@ def resolve_delete_card(*_, id):
         steal=res.response[0][5],
         block=res.response[0][6],
         account_id=res.response[0][8],
-        img_url=res.response[0][7]
+        img_url='xxDeletedxx'
     )
 
     return {"cards": [card], "errors": None}
@@ -220,23 +214,6 @@ def resolve_create_card(*_, card):
     return {"cards": [returned_card], "errors": None}
 
 
-schema = make_executable_schema(type_defs, [query, mutation, upload_scalar])
+schema = make_executable_schema(type_defs, [query, mutation])
 app = GraphQL(schema, debug=True)
 
-
-# app = Flask(__name__)
-
-# app.add_url_rule('/graphql', view_func=GraphQLView.as_view(
-#     'graphql',
-#     schema=schema,
-#     graphiql=True
-# ))
-
-
-# @app.route('/')
-# def hello_world():
-#     return "hello world"
-
-
-# if __name__ == '__main__':
-#     app.run()

@@ -2,12 +2,7 @@ import sys
 from pathlib import Path
 
 parent = Path(__file__).parents[1]
-# grandparent = Path(__file__).parents[2]
-
 sys.path.append(str(parent))
-# sys.path.append(str(grandparent))
-
-# print(sys.path)
 
 import psycopg2
 from psycopg2 import errorcodes, ProgrammingError
@@ -50,13 +45,6 @@ class RunQuery:
             res.response = response
             res.status = 200
 
-        # except psycopg2.errors.UniqueViolation as err:
-        #     err = self.print_unique_error(err)
-        #     conn = None
-
-        #     res.error = err
-        #     res.status = 400
-
         except ProgrammingError:
             err_type, err_val, traceback = sys.exc_info()
             conn = None
@@ -67,25 +55,6 @@ class RunQuery:
             res.status = 400
 
         return res
-
-    # def print_unique_error(self, err):
-    #     open_brace_idx, close_brace_idx = err.pgerror.index(
-    #         "("), err.pgerror.index(")")
-
-    #     field = 'Inputting to db'
-    #     message = 'Attribute ' + \
-    #         str(err.pgerror[open_brace_idx +
-    #                         1: close_brace_idx]) + ' not unique.'
-    #     err = ErrorType(field=field, message=message)
-
-    #     return err
-
-    # def print_other_pg_error(self, err):
-    #     field = self.query
-    #     message = errorcodes.lookup(err.pgcode)
-    #     err = ErrorType(field=field, message=message)
-
-    #     return err
 
     def print_error(self, query, err_mess):
         field = query

@@ -1,7 +1,9 @@
+import os
 from PIL import Image
 from flask import Flask, request, jsonify
 import string
 import random
+from gen_util.p_graphql_endpoint import send_create_card_mutation
 
 app = Flask(__name__)
 
@@ -22,18 +24,24 @@ def download(filename):
         letter = random.choice(ascii_)
         new_filename += str(num) + letter
 
-    image = Image.new('RGB', (200, 200))
-    image.save('/media/' + new_filename + '.jpg')
+    new_filename += '.jpg'
+    abs_path = os.path.dirname(__file__)
+    abs_path += '/media/' + new_filename
 
-    with open('/media/' + new_filename + '.jpg', 'wb') as f:
+    image = Image.new('RGB', (200, 200))
+    image.save(abs_path)
+
+    with open(abs_path, 'wb') as f:
         f.write(data)
 
-    response = {
-        'image_name': new_filename + '.jpg',
-        'status': 200
-    }
+    # second option for testing
+    # data = send_create_card_mutation(new_filename)
+    # return jsonify(data)
 
-    return jsonify(response)
+    return jsonify({
+        'filename': new_filename,
+        'status': 200
+    })
 
 
 if __name__ == '__main__':

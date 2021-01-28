@@ -1,4 +1,4 @@
-class ImageClass():
+class S3Class():
     def __init__(self, bucket_name):
         import boto3
         import string
@@ -8,7 +8,10 @@ class ImageClass():
         self.letters = string.ascii_letters
     
     def upload_img(self, filename):
-        self.s3.meta.client.upload_file(filename, self.bucket_name, filename)
+        import os
+
+        path = os.path.dirname(__file__) + '/../../media/' + filename
+        self.s3.meta.client.upload_file(path, self.bucket_name, filename)
     
     def get_img(self, url):
         import requests as re
@@ -25,3 +28,9 @@ class ImageClass():
 
         with open(url[slash_idx:] + rand_string) as f:
             f.write(data)
+        
+    def delete_img(self, filename):
+        self.s3.meta.client.delete_object(
+            Bucket='sports-trader-card-images',
+            Key=filename
+        )
