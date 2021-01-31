@@ -21,13 +21,26 @@ class RunQuery:
 
     def run_query(self, query, tuple_=None):
         from decouple import config
-        DBNAME = config('DB')
-        USER = config('DB_USER')
-        HOST = config('DB_HOST')
-        PASSWORD = config('DB_PASSWORD')
-        input_str = "dbname={} user={} host={} password={}".format(DBNAME, USER, HOST, PASSWORD)
+        import boto3
 
-        conn = psycopg2.connect(input_str)
+        # DBNAME = config('DB')
+        # USER = config('DB_USER')
+        # HOST = config('DB_HOST')
+        # PASSWORD = config('DB_PASSWORD')
+        # input_str = "dbname={} user={} host={} password={}".format(DBNAME, USER, HOST, PASSWORD)
+        # conn = psycopg2.connect(input_str)
+        
+        ENDPOINT = config('AWS_ENDPOINT')
+        PORT = config('AWS_PORT')
+        USER = config('AWS_USER')
+        REGION = config('AWS_REGION')
+        DBNAME = config('AWS_DBNAME')
+        PASSWORD = config('AWS_PASSWORD')
+
+        client = boto3.client("rds")
+        token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)
+        conn = psycopg2.connect(host=ENDPOINT, port=PORT, database=DBNAME, user=USER, password=PASSWORD)
+
         res = DBResType()
         cur = conn.cursor()
 

@@ -1,0 +1,9 @@
+CREATE TABLE account_db (id SERIAL PRIMARY KEY, firstname varchar(50), lastname varchar(50), username varchar(50) UNIQUE, email varchar(70), number varchar(11), password varchar(50), createdat timestamp without time zone, updatedat timestamp without time zone);
+CREATE TABLE card_db (card_id SERIAL PRIMARY KEY, inside int, mid int, three int, passing int, steal int, block int, imgurl varchar(100), account_id int, CONSTRAINT account_id_fk FOREIGN KEY(account_id) REFERENCES account_db(id), createdat timestamp without time zone, updatedat timestamp without time zone);
+CREATE TABLE proposed_trade_db (id SERIAL PRIMARY KEY, from_id int, to_id int, CONSTRAINT from_id_fk FOREIGN KEY(from_id) REFERENCES account_db(id), CONSTRAINT to_id_fk FOREIGN KEY(to_id) REFERENCES account_db(id), from_cards integer[], to_cards integer[], createdat timestamp without time zone, updatedat timestamp without time zone);
+
+To see constraints: SELECT con.* FROM pg_catalog.pg_constraint con INNER JOIN pg_catalog.pg_class rel ON rel.oid = con.conrelid INNER JOIN pg_catalog.pg_namespace nsp ON nsp.oid = connamespace WHERE nsp.nspname = 'public'  AND rel.relname = '<table_name>';
+To see data types: SELECT column_name, data_type FROM information_schema.columns WHERE table_name = '<table_name>';
+
+To access RDS PostgresSQL database: psql --host=<db_url --port=<port> --username=<username> --password --dbname=<db_name>
+# note - you will be prompted to enter your passsword - omitting --password will raise an error
