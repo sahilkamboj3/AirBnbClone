@@ -1,7 +1,7 @@
 # basic dockerfile
 
 # set base image (host OS)
-FROM python:3.7
+FROM python:3.9
 
 # set the working directory
 WORKDIR /code
@@ -16,5 +16,6 @@ RUN pip install -r requirements.txt
 COPY server/ .
 
 # commands to run
-CMD ["python", "./download_img_server"]
-CMD ["uvicorn", "main:app"]
+# CMD ["python", "./download_img_server"]
+CMD ["python", "download_img_server"]
+# CMD ["uvicorn", "main:app"]
