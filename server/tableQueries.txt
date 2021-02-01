@@ -1,4 +1,4 @@
-CREATE TABLE account_db (id SERIAL PRIMARY KEY, firstname varchar(50), lastname varchar(50), username varchar(50) UNIQUE, email varchar(70), number varchar(11), password varchar(50), createdat timestamp without time zone, updatedat timestamp without time zone);
+CREATE TABLE account_db (id SERIAL PRIMARY KEY, firstname varchar(50), lastname varchar(50), username varchar(50) UNIQUE, email varchar(70), number varchar(11), password varchar(70), createdat timestamp without time zone, updatedat timestamp without time zone);
 CREATE TABLE card_db (card_id SERIAL PRIMARY KEY, inside int, mid int, three int, passing int, steal int, block int, imgurl varchar(100), account_id int, CONSTRAINT account_id_fk FOREIGN KEY(account_id) REFERENCES account_db(id), createdat timestamp without time zone, updatedat timestamp without time zone);
 CREATE TABLE proposed_trade_db (id SERIAL PRIMARY KEY, from_id int, to_id int, CONSTRAINT from_id_fk FOREIGN KEY(from_id) REFERENCES account_db(id), CONSTRAINT to_id_fk FOREIGN KEY(to_id) REFERENCES account_db(id), from_cards integer[], to_cards integer[], createdat timestamp without time zone, updatedat timestamp without time zone);
 

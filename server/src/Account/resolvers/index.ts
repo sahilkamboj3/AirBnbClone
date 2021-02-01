@@ -66,10 +66,12 @@ export class UserResolver {
     ): Promise<UserResponse | null> {
         const userFeedback: UserResponse = await cases.loginAccount(info);
 
+        if (userFeedback['error']) { return { error: userFeedback['error'] } }
+
         if (userFeedback['account'] === undefined) {
             const error: ErrorType = {
                 field: "login",
-                message: "account doesn't exist"
+                message: "username doesn't exist"
             }
             return { error }
         }

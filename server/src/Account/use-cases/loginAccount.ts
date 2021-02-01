@@ -5,7 +5,7 @@ import UseCaseType from './useCaseType';
 import { Pool } from 'pg'
 import { UserResponse, LoginCredentials } from '../resolvers/types';
 
-export default function makeLoginAccount ( pool: Pool ) {
+export default function makeLoginAccount ( pool: Pool, passwordHash: any ) {
     return async function loginAccount( creds: LoginCredentials ): Promise<UserResponse> {
 
         const inputs: UseCaseType = {
@@ -15,25 +15,25 @@ export default function makeLoginAccount ( pool: Pool ) {
 
         let info: AccountType = {
             userName: creds['username'],
-            password: creds['password'],
 
         } as AccountType;
 
         const res = await pgQuery(inputs, info);
-        
-        // if (res["error"]) {
-        //     return {
-        //         error: {
-        //             field: "create account",
-        //             message: res["error"]
-        //         }
-        //     }
-        // }
 
         let account_ = undefined;
+        
         if (res['response'].rows[0]) {
 
             const acc = res['response'].rows[0];
+
+            if (!passwordHash.verify(creds['password'], acc['password'])) {
+                return {
+                    error: {
+                        field: 'login password',
+                        message: 'password invalid'
+                    }
+                }
+            }
 
             account_ = {
                 id: acc['id'],
@@ -47,11 +47,9 @@ export default function makeLoginAccount ( pool: Pool ) {
             } as AccountType;
         }
 
-        // console.log(account_);
-
         return {
             account: account_,
-            response: "account created"
+            response: "account logged in"
         }
     }
 }

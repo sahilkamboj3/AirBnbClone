@@ -14,7 +14,8 @@ export const getOneQuery  = (): DbQueryType => {
 
 export const loginQuery  = (): DbQueryType => {
     return {
-        query: "SELECT * FROM account_db WHERE username = ($1) AND password = ($2);"
+        // query: "SELECT * FROM account_db WHERE username = ($1) AND password = ($2);"
+        query: "SELECT * FROM account_db WHERE username = ($1);"
     }
 }
 

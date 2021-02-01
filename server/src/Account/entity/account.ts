@@ -5,10 +5,12 @@ import { ErrorType } from '../../util/types';
 export interface buildMakeAccountType {
     isValidNumber: (num: string) => ValidatorType;
     isValidEmail: (email: string) => ValidatorType;
-    hashPassword: (pw: string) => any;
+    // hashPassword: (pw: string) => any;
+    passwordHash: any;
 }
 
-export function buildMakeAccount ({ isValidNumber, isValidEmail, hashPassword }: buildMakeAccountType) {
+// export function buildMakeAccount ({ isValidNumber, isValidEmail, hashPassword }: buildMakeAccountType) {
+export function buildMakeAccount ({ isValidNumber, isValidEmail, passwordHash }: buildMakeAccountType) {
     return function makeAccount ({ firstName, lastName, userName, email, number, password, createdAt = Date.now(), updatedAt = Date.now() }: AccountType): AccountResType {
         const errors: ErrorType[] = [];
         
@@ -75,7 +77,7 @@ export function buildMakeAccount ({ isValidNumber, isValidEmail, hashPassword }:
             }
         }
 
-        // const pw = hashPassword(password);
+        password = passwordHash.generate(password);
 
         const account = {
             firstName, lastName, userName, email, number, password, createdAt, updatedAt
