@@ -5,11 +5,12 @@ import makeGetOneAccount from './getOneAccount';
 import makeDeleteAccount from './deleteAccount';
 import makeLoginAccount from './loginAccount';
 import { pool } from '../../db'
+import passwordHash from 'password-hash';
 
 export const makeAccount = makeCreateAccount(pool);
 export const getAccounts = makeGetAccounts(pool);
 export const getAccount = makeGetOneAccount(pool);
 // export const updateAccount = makeUpdateAccount(pool);
 export const deleteAccount = makeDeleteAccount(pool);
-export const loginAccount = makeLoginAccount(pool);
+export const loginAccount = makeLoginAccount(pool, passwordHash);
 
